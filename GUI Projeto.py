@@ -4,7 +4,7 @@ import psycopg2
 connection = psycopg2.connect(database = 'locadoraveiculos',
                               user = 'postgres',
                               host = 'localhost',
-                              password = '345473')
+                              password = '123456')
 
 def cadastrarFuncionario():
     def cadastrar():
