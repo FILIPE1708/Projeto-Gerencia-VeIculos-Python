@@ -1,0 +1,93 @@
+create database locadoraVeiculos;
+
+create table funcionario(
+    idFuncionario serial primary key,
+    nome varchar(150) not null,
+    sexo char(1) not null check(sexo = 'F' or sexo = 'M'),
+    dataNascimento date not null,
+    logradouro varchar(150) not null,
+    numero varchar(50) not null,
+    bairro varchar(150) not null,
+    complemento varchar(150),
+    municipio varchar(150) not null,
+    UF char(2) not null,
+    salario decimal(8,2) not null
+);
+
+create table cliente(
+    idCliente serial primary key,
+    nome varchar(150) not null,
+    sexo char(1) not null check(sexo = 'F' or sexo = 'M'),
+    logradouro varchar(150) not null,
+    numero varchar(50) not null,
+    bairro varchar(150) not null,
+    complemento varchar(150),
+    municipio varchar(150) not null,
+    UF char(2) not null,
+    telefone varchar(30) not null
+);
+
+create table atendimento(
+    idFuncionario int not null,
+    idCliente int not null,
+    foreign key(idFuncionario)
+    references funcionario(idFuncionario),
+    foreign key(idCliente)
+    references cliente(idCliente)
+);
+
+create table veiculo(
+    idVeiculo serial primary key,
+    modelo varchar(50) not null,
+    ano int not null
+);
+
+create table locacao(
+    idCliente int not null,
+    idVeiculo int not null,
+    dataInicio date not null,
+    dataFim date not null,
+    valor decimal(8,2) not null,
+    foreign key(idCliente)
+    references cliente(idCliente),
+    foreign key(idVeiculo)
+    references veiculo(idVeiculo)
+);
+
+create table revisao(
+    idRevisao serial primary key,
+    idVeiculo int not null,
+    dataRevisao date not null,
+    trocaOleo varchar(50) not null,
+    trocaFiltro varchar(50) not null,
+    trocaPneus varchar(50) not null,
+    foreign key(idVeiculo)
+    references veiculo(idVeiculo)
+);
+
+create table fornecedor(
+    idFornecedor serial primary key,
+    nome varchar(150) not null,
+    logradouro varchar(150) not null,
+    numero varchar(50) not null,
+    bairro varchar(150) not null,
+    complemento varchar(150),
+    municipio varchar(150) not null,
+    UF char(2) not null,
+    telefone varchar(30) not null
+);
+
+create table compra(
+    idFornecedor int not null,
+    idFuncionario int not null,
+    idVeiculo int not null,
+    dataCompra date not null,
+    valor decimal(8,2) not null,
+    foreign key(idFornecedor)
+    references fornecedor(idFornecedor),
+    foreign key(idFuncionario)
+    references funcionario(idFuncionario),
+    foreign key(idVeiculo)
+    references veiculo(idVeiculo)
+);
+
